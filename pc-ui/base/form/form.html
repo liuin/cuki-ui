@@ -2,15 +2,15 @@
 <html lang="zh-CN">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="renderer" content="webkit">
-  <meta name="description" content="">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <meta name="description" content="" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="../../dist/css/reset.css">
-  <link rel="stylesheet" href="../../dist/css/cuki.css">
-  <link rel="stylesheet" href="from.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="../../dist/css/reset.css" />
+  <link rel="stylesheet" href="../../dist/css/cuki-ui.css" />
+  <link rel="stylesheet" href="from.css" />
   <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -36,49 +36,49 @@
     <div class="row">
 
        <form action="#" class="formstyle">
-          <div class="groundform groundform-car">
+          <div class="formgroup formgroup-car">
                 <label>车　型：</label>
-                <select name="" class="yh" data-form="select" >
+                <select  name="" class="fselect yh" data-form="select" >
                   <option>车   型1</option>
                   <option>车   型2</option>
                 </select>  
               </div>
-              <div class="groundform groundform-biz">
+              <div class="formgroup formgroup-biz">
                 <label>经销商：</label>
-                <select name="" class="yh" data-form="select" >
+                <select name="" class="fselect yh" data-form="select" >
                   <option>经销商1</option>
                   <option>经销商2</option>
                 </select>  
               </div>      
-          <div class="groundform groundform-name">
+          <div class="formgroup formgroup-name">
             <label>姓　名：</label>
-            <input type="text" name="" class="f-box yh" id=""> 
+            <input type="text" name="" class="ftext yh" id=""> 
           </div>
-          <div class="groundform groundform-tel">
+          <div class="formgroup formgroup-tel">
             <label>电　话：</label>
-            <input type="text" name="" class="f-box yh" id=""> 
+            <input type="text" name="" class="ftext yh" id=""> 
           </div>
       
-          <div class="groundform groundform-ck">
-            <label><input type="radio" name="" id="" />是</label>
-            <label><input type="radio" name="" id="" />否</label>
+          <div class="formgroup formgroup-ck">
+            <label><input type="radio" name="check" id="" />是</label>
+            <label><input type="radio" name="check" id="" />否</label>
           </div>
           
-          <div class="groundform-sub">
-            <button type="submit" class="btn-sub yh">预约试驾</button>
+          <div class="formgroup-sub">
+            <button type="submit"  class="btn btn-2 yh">预约试驾</button>
           </div>
         </form><!-- /多行 -->
         
-
+        <hr />
        
-        <form class="form-inline" >
-            <div class="form-group">
+        <form class="formstyle-inline" >
+            <div class="formgroup">
               <label class="sr-only" for="exampleInputEmail2">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+              <input type="email" class="ftext" id="exampleInputEmail2" placeholder="Enter email">
             </div>
-            <div class="form-group">
+            <div class="formgroup">
               <label class="sr-only" for="exampleInputPassword2">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+              <input type="password" class="ftext" id="exampleInputPassword2" placeholder="Password">
             </div>
             <div class="checkbox">
               <label>
@@ -90,9 +90,19 @@
               <input type="radio"> Remember me
               </label>
           </div>
-            <button type="submit" class="btn btn-default">Sign in</button>
+            <button type="submit" class="btn btn-1">Sign in</button>
         </form>
         <!-- end 1行 -->
+
+        <hr />
+
+        <form method="post" action="" class="formstyle">
+          <div class="formgroup formgroup-area">
+            <label>备注</label>
+            <textarea class="ftextarea" name="" placeholder="备注"></textarea>
+          </div>
+        </form>
+
     </div>
   </div>
 </body>

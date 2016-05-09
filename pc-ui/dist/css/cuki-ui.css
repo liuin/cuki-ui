@@ -1,0 +1,91 @@
+.ta-l {text-align:left;}
+.ta-c {text-align:center;}
+.ta-r {text-align:right;}
+
+/*-- grid --*/
+.row {height: 1%;overflow:hidden;}
+.col {float:left;display:inline;}
+
+.col-1 {width: 8.33333333%;}
+.col-2 {width: 16.66666667%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.3333333%;}
+.col-5 {width: 41.66666667%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33333333%;}
+.col-8 {width: 66.66666667%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33333333%;}
+.col-11 {width: 91.66666667%;}
+.col-12 {width: 100%;}
+
+/*-- form --*/
+input:-webkit-autofill {
+-webkit-box-shadow: 0 0 0px 1000px #eee inset;
+border: 1px solid #CCC!important;
+}
+.ftextarea{ outline: 0;border: 1px solid #999;padding: 6px 10px;width: 600px;background: #eee; height: 80px; padding: 10px;}
+
+.ftext { outline: 0;border: 1px solid #999;padding: 6px 10px;width: 300px;background: #eee;}
+.fselect { width: 322px;height: 30px;}
+
+.formstyle {display:block; }
+.formgroup { margin-bottom: 10px; position:relative; overflow:hidden;}
+.formgroup label{float:left; line-height: 30px; width: 70px;}
+.formgroup i {position: absolute;font-size: 20px;right: -18px;top: 5px; color: }
+.formgroup .fselect {}
+
+
+/*-- start form-inline  --*/ 
+.formstyle-inline .formgroup{display: inline-block; margin-bottom: 0; vertical-align: middle; _display:inline;}
+.formstyle-inline .form-control {display:inline-block; height: 20px; padding: 6px 12px; font-size: 14px; line-height: 1.428571429; color: #555; vertical-align: middle; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px;}
+.formstyle-inline .sr-only {position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;}
+.formstyle-inline .radio, 
+.formstyle-inline .checkbox { display: inline-block; padding-left: 0; margin-top: 0; margin-bottom: 0; _display:inline; }
+.formstyle-inline .checkbox input,
+.formstyle-inline .radio input{position:relative;top:2px;}
+.formstyle-inline .btn {display: inline-block;  padding: 6px 12px; margin-bottom: 0; font-size: 14px; font-weight: normal; line-height: 1.428571429; text-align: center; white-space: nowrap; vertical-align: middle;}
+
+/*-- btn --*/
+.btn {border: 1px solid #ddd;border-radius:5px; display:inline-block;padding: 0 20px; line-height: 30px;color: #999;}
+.btn-1 {background:#337ab7; border: 1px solid #337ab7; color: #fff;}
+.btn-2 {background:#449d44; border: 1px solid #449d44; color: #fff;}
+.btn-3 {background:#ec971f; border: 1px solid #ec971f; color: #fff;}
+.btn-4 {
+  background-color: orange;
+  background-image: -webkit-linear-gradient(180deg,orange 0,red 100%);
+  background-image: -moz-linear-gradient(180deg, orange 0%, red 100%);
+  background-image: -o-linear-gradient(180deg, orange 0%, red 100%);
+  background-image: linear-gradient(180deg, orange 0%, red 100%);
+}
+
+.btn-5 {
+  background-color: blue;
+  background-image: -webkit-linear-gradient(90deg,rgba(255,170,255,0) 0,rgba(255,170,255,.8) 40%,rgba(255,255,170,.8) 60%,rgba(255,255,170,0) 100%);
+  background-image: -moz-linear-gradient(90deg, rgba(255,170,255,0) 0%, rgba(255,170,255,.8) 40%, rgba(255,255,170,.8) 60%, rgba(255,255,170,0) 100%);
+  background-image: -o-linear-gradient(90deg, rgba(255,170,255,0) 0%, rgba(255,170,255,.8) 40%, rgba(255,255,170,.8) 60%, rgba(255,255,170,0) 100%);
+  background-image: linear-gradient(90deg, rgba(255,170,255,0) 0%, rgba(255,170,255,.8) 40%, rgba(255,255,170,.8) 60%, rgba(255,255,170,0) 100%);
+}
+
+/*-- selectstyle --*/
+.selectstyle {position:relative; border:1px solid #ccc; height:30px;display:inline-block;line-height:30px; width:100px; overflow:hidden;}
+.selectstyle select {position:absolute;left:0; top:0px; height:30px; margin:0; padding:0; width:100%; height:38px; }
+.selectstyle .val {display:block; padding-left: 5px; color: #333;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;padding-right: 24px;}
+
+/*-- icon --*/
+.icon {display:inline-block;width: 30px;height: 30px;}
+
+
+/*-- table --*/
+.table1 {width: 100%; color: #666; table-layout:fixed;}
+
+.table1 td,
+.table1 th
+{border: 1px solid #ccc;padding: 5px 10px; text-align:center;}
+
+
+
+/*-- list1 --*/
+.list1 {line-height: 25px;}
+.list1 li{position:relative; padding-left:35px; margin-bottom:5px; line-height:25px;}
+.list1 .list1-count {position:absolute; background:#000; width:25px; height:25px; margin-bottom:15px; text-align:center;left: 0; top:1px; color: #fff;border-radius:50%;}
