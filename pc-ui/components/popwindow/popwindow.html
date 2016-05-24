@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <meta name="description" content="" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="../../dist/css/cuki-ui.css" />
+  <script type="text/javascript" src="../../dist/js/jquery.js"></script>
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!--[if lt IE 7]>
+    <link rel="stylesheet" href="../dist/css/ie7.css">
+  <![endif]-->
+  <title>website name</title>
+
+  <style type="text/css">
+    
+    /*-- 弹窗1 --*/
+    .popbk-wrap {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);}
+    .popbk {position: absolute; top:0; left:50%; -webkit-transition:0.5s; transition:0.5s;  -webkit-transform: scale(0); transform: scale(0);}
+    .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:red; cursor:pointer;}
+    .fade.in { opacity: 1; }
+    .fade.in .popbk {-webkit-transform: scale(1); transform: scale(1);}
+    .fade{opacity: 0;-webkit-transition: opacity .15s linear;-o-transition: opacity .15s linear;transition: opacity .15s linear;}  
+    
+    .pop1 {width: 500px;height: 300px;}
+  </style>
+</head>
+<body class="">
+  <noscript>
+    <strong>你的浏览器似乎禁用了 JavaScript。</strong><br />您必须在浏览器中启用JavaScript才能使用本网站的功能。
+  </noscript>
+  <div class="container-table container yh fs14 lh20">
+    <div class="row">
+      <h2>windows弹框</h2>
+      <div class="col-3">
+        <button class="btn btn-1" id="btn1">弹框1</button>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-2">弹框2</button>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-2">弹框3</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="pop1" id="pop1" data-box="popbk" >
+    <h2>弹出1</h2>
+  </div>
+
+  <div class="pop2" id="pop2" data-box="popbk" >
+    <h2>弹出2</h2>
+  </div>
+
+  <div class="pop3" id="pop3" data-box="popbk" >
+    <h2>弹出2</h2>
+  </div>
+
+
+  <script type="text/javascript">
+
+  /* ========================================================================
+   * Bootstrap: transition.js v3.2.0
+   * http://getbootstrap.com/javascript/#transitions
+   * ========================================================================
+   * Copyright 2011-2014 Twitter, Inc.
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+   * ======================================================================== 
+   $.support.transition && $parent.hasClass('fade') ?
+        $parent
+          .one('bsTransitionEnd', removeElement)
+          .emulateTransitionEnd(150) :
+  removeElement()   
+   */
+
+  +function ($) {
+    'use strict';
+
+    // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+    // ============================================================
+
+    function transitionEnd() {
+      var el = document.createElement('bootstrap')
+
+      var transEndEventNames = {
+        WebkitTransition : 'webkitTransitionEnd',
+        MozTransition    : 'transitionend',
+        OTransition      : 'oTransitionEnd otransitionend',
+        transition       : 'transitionend'
+      }
+
+      for (var name in transEndEventNames) {
+        if (el.style[name] !== undefined) {
+          return { end: transEndEventNames[name] }
+        }
+      }
+
+      return false // explicit for ie8 (  ._.)
+    }
+
+    // http://blog.alexmaccaw.com/css-transitions
+    $.fn.emulateTransitionEnd = function (duration) {
+      var called = false
+      var $el = this
+      $(this).one('bsTransitionEnd', function () { called = true })
+      var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
+      setTimeout(callback, duration)
+      return this
+    }
+
+    $(function () {
+      $.support.transition = transitionEnd()
+
+      if (!$.support.transition) return
+
+      $.event.special.bsTransitionEnd = {
+        bindType: $.support.transition.end,
+        delegateType: $.support.transition.end,
+        handle: function (e) {
+          if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
+        }
+      }
+    })
+
+  }(jQuery);
+
+
+    /** 
+    * extend 弹出框
+    * @author cuki13         
+      $(obj).popbk();
+      $("#popbk2").data('ck.pokbk').open();
+      $("#popbk2").data('ck.pokbk').close();
+    */
+    
+    /** 
+    * extend 弹出框
+    * @author cuki13
+     
+      $(obj).popbk();
+      $("#popbk2").data('ck.pokbk').open();
+      $("#popbk2").data('ck.pokbk').close();
+    */
+    
+    +(function($){
+      var dataString = '[data-box="popbk"]';
+      
+      var Popbk = function  (el, number ,options) {
+        this.el = $(el)
+        this.id = number
+        this.options = $.extend({}, this.defualts, options); 
+      }
+      
+      Popbk.defualts = {};
+    
+      Popbk.prototype.build = function  (el) {
+        var $this = $(el);
+        $this.show();
+        $this.wrap('<div class="popbk-wrap-'+ this.id +' popbk-wrap fade" ></div>');
+        $this.wrap('<div class="popbk-'+ this.id +' popbk" ></div>');
+    
+        var sClose = "<a class='close'><span class='ar'>X</span></a>";
+        sClose = $(sClose);
+        sClose.insertAfter($this);
+        var ml = $this.width()/2;     
+        var mlstyle={
+          "margin-left" : -ml,
+          "width":$this.width(),
+          "height":$this.height()
+    
+        }
+        $this.parent(".popbk").css(mlstyle);
+        var wh = $this.height();
+        if ($(window).height() < wh) {
+          $this.parent(".popbk").css("top","30px");
+        }else {
+          $this.parent(".popbk").css({
+            "margin-top":-wh/2,
+            "top":'50%'
+          });
+        } 
+        $this.parent(".popbk").find(".close").on('click',function  () {
+          $this.data('ck.pokbk').close();
+        })    
+        $this.parents(".popbk-wrap").hide().on('click',function  (e) {
+          if ($(e.target).hasClass('popbk-wrap')) {
+            $this.data('ck.pokbk').close();      
+          }
+        });
+      }
+    
+    
+      Popbk.prototype.rebuild = function  () {
+          var $this = this;
+          var $thisObj = $this.el;
+    
+    
+          $this.el.height('auto');
+        
+          var ml = $this.el.width()/2;     
+      
+          var mlstyle={
+            "margin-left" : -ml,
+            "width":$this.el.width(),
+            "height":$this.el.height()
+    
+          }
+          $this.el.parent(".popbk").css(mlstyle);
+          
+          setTimeout(
+            function(){
+              $(this)[0].offsetWidth;
+              var wh = $this.el.height();    
+    
+              if ($(window).height() < wh) {
+                $this.el.parent(".popbk").css("top","30px");
+              }else {
+                $this.el.parent(".popbk").css({
+                  "margin-top":-wh/2,
+                  "top":'50%'
+                });
+              }
+            }, 10)
+        }
+    
+      Popbk.prototype.open = function  () {
+        this.close;
+        var $this = this.el;
+        if ($this.length) {
+          $this.parents(".popbk-wrap").show();
+          $this.parents(".popbk-wrap")[0].offsetWidth;
+          setTimeout(
+            function(){
+              $this.parents(".popbk-wrap").addClass("in");
+              $('body').css('overflow','hidden');          
+            }, 300)
+    
+    
+        }
+      }
+    
+      Popbk.prototype.close = function  () {
+        $('body').css('overflow','auto');
+        var $this = this.el;
+        var $parent = $this.parents(".popbk-wrap");
+        if ($.support.transition && $parent.hasClass('fade')) {
+          $parent.removeClass("in");
+          $parent.one('bsTransitionEnd', function  () {
+              $parent.hide();
+            }).emulateTransitionEnd(150);
+        }else {
+          $parent.hide();
+        }
+        $this.trigger('callbackClose');
+        $('body').css('overflow','auto');
+      }
+    
+      function Plugin(option) {
+        return this.each(function (n) {
+          if ($(this).html() == undefined) {
+            return 
+          }
+          var $this   = $(this)
+          var data    = $this.data('ck.pokbk')
+          var number = $this.attr('id') || n 
+          var options = typeof option == 'object' && option
+          if (!data) $this.data('ck.pokbk', (data = new Popbk(this,number)))
+          if (option == 'build') data.build($(this))
+          else if (option) data.setState(option)
+        })
+      }
+      $(document).on('ready.popbk poprb', function  () {
+        var $this = $(dataString);
+        
+        if ($this.data('ck.pokbk') == undefined) {
+          Plugin.call($this,'build');
+        }
+      })
+    
+      $.fn.popbk = function  () {
+        var $this = $(this);      
+        
+        if ($this.data('ck.pokbk') == undefined) {
+          Plugin.call($this,'build');
+        }    
+      }
+    
+    })(jQuery);
+
+    $(document).ready(function() {
+      //弹窗1
+      $('#btn1').on('click',function  () {
+        $("#pop1").data('ck.pokbk').open();
+      })
+    })
+  </script>
+
+</body>
+</html>
+

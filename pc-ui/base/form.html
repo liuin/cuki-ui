@@ -8,16 +8,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="../../dist/css/reset.css" />
-  <link rel="stylesheet" href="../../dist/css/cuki-ui.css" />
-  <link rel="stylesheet" href="from.css" />
+  <link rel="stylesheet" href="../dist/css/cuki-ui.css" />
   <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 
   <!--[if lt IE 7]>
-    <link rel="stylesheet" href="../../dist/css/ie7.css">
+    <link rel="stylesheet" href="../dist/css/ie7.css">
   <![endif]-->
   <title>website name</title>
 
@@ -28,13 +26,13 @@
     .container-grid span {display:block;border: 0px solid #fff; }
   </style>
 </head>
-<body class="">
+<body class="yh">
   <noscript>
     <strong>你的浏览器似乎禁用了 JavaScript。</strong><br />您必须在浏览器中启用JavaScript才能使用本网站的功能。
   </noscript>
   <div class="container-typography container yh fs14 lh20">
     <div class="row">
-
+       <h2>分行表单</h2>
        <form action="#" class="formstyle">
           <div class="formgroup formgroup-car">
                 <label>车　型：</label>
@@ -63,6 +61,12 @@
             <label><input type="radio" name="check" id="" />是</label>
             <label><input type="radio" name="check" id="" />否</label>
           </div>
+
+          <div class="formgroup formgroup-area">
+            <label>备注</label>
+            <textarea class="ftextarea" name="" placeholder="备注"></textarea>
+          </div>
+
           
           <div class="formgroup-sub">
             <button type="submit"  class="btn btn-2 yh">预约试驾</button>
@@ -70,7 +74,8 @@
         </form><!-- /多行 -->
         
         <hr />
-       
+
+        <h2>单行表单</h2>       
         <form class="formstyle-inline" >
             <div class="formgroup">
               <label class="sr-only" for="exampleInputEmail2">Email address</label>
@@ -92,18 +97,20 @@
           </div>
             <button type="submit" class="btn btn-1">Sign in</button>
         </form>
-        <!-- end 1行 -->
+        <!-- / 表单1行 -->
 
         <hr />
-
-        <form method="post" action="" class="formstyle">
-          <div class="formgroup formgroup-area">
-            <label>备注</label>
-            <textarea class="ftextarea" name="" placeholder="备注"></textarea>
-          </div>
-        </form>
+        
+        <h2>按钮</h2>
+        <button class="btn">按钮1</button>
+        <button class="btn btn-1">按钮1</button>
+        <button class="btn btn-2">按钮2</button>
+        <button class="btn btn-3">按钮3</button>
+        <button class="btn btn-4">按钮4</button>
+        <button class="btn btn-5">按钮5</button>
 
     </div>
   </div>
 </body>
 </html>
+

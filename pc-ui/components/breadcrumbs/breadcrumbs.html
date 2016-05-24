@@ -10,7 +10,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="../../dist/css/reset.css">
   <link rel="stylesheet" href="../../dist/css/cuki-ui.css">
-  <link rel="stylesheet" href="from.css">
   <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -20,27 +19,34 @@
     <link rel="stylesheet" href="../../dist/css/ie7.css">
   <![endif]-->
   <title>website name</title>
+  
 
   <style type="text/css">
-    .col {background:#B2BBE6;}  
-    .container-button {padding-top: 20px;}
-    .container-grid {text-align:center;}
-    .container-grid .row {overflow:hidden;margin-bottom: 10px;}
-    .container-grid span {display:block;border: 0px solid #fff; }
+    /*-- breadcrumb --*/
+    .breadcrumb {overflow:hidden; margin: 0; padding: 0;color: #999;}
+    .breadcrumb li{display:inline-block;}
+    .breadcrumb li a {color: #666; }
+    .breadcrumb li.space {margin: 0 3px;}
+    .breadcrumb li.active {color: #000; }
   </style>
+
 </head>
 <body class="yh">
   <noscript>
     <strong>你的浏览器似乎禁用了 JavaScript。</strong><br />您必须在浏览器中启用JavaScript才能使用本网站的功能。
   </noscript>
-  <div class="container-button container yh fs14 lh20">
+  <div class="container-loading container yh fs14 lh20">
     <div class="row">
-      <a class="btn " href="#" role="button">Link</a>
-      <button class="btn btn-1 yh" type="submit">Button</button>
-      <input class="btn btn-2 yh" type="button" value="Input">
-      <input class="btn btn-3 yh" type="submit" value="Submit">
-      <input class="btn btn-4 yh" type="submit" value="Submit">
-      <input class="btn btn-5 yh" type="submit" value="Submit">
+      <h2>面包屑</h2>
+      
+      <ol class="breadcrumb">
+        <li><a href="#">目录1</a></li>
+        <li class="space">/</li>
+        <li><a href="#">目录2</a></li>
+        <li class="space">/</li>
+        <li class="active">目录3</li>
+      </ol>
+
     </div>
   </div>
 </body>
