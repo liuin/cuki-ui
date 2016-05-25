@@ -23,14 +23,39 @@
   <style type="text/css">
     
     /*-- 弹窗1 --*/
-    .popbk-wrap {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);}
-    .popbk {position: absolute; top:0; left:50%; -webkit-transition:0.5s; transition:0.5s;  -webkit-transform: scale(0); transform: scale(0);}
-    .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:red; cursor:pointer;}
-    .fade.in { opacity: 1; }
-    .fade.in .popbk {-webkit-transform: scale(1); transform: scale(1);}
-    .fade{opacity: 0;-webkit-transition: opacity .15s linear;-o-transition: opacity .15s linear;transition: opacity .15s linear;}  
+    .popbk-wrap-pop1 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .3s linear;-o-transition: opacity .3s linear;transition: opacity .3s linear;    }
+    .popbk-wrap-pop1.in { opacity: 1; }
+
+    .popbk-wrap-pop1 .popbk {position: absolute; top:0; left:50%; -webkit-transition:0.5s .3s; transition:0.5s .3s;  -webkit-transform: scale(0); transform: scale(0); background:#eee;}
+   .popbk-wrap-pop1.in .popbk {-webkit-transform: scale(1); transform: scale(1);}
+
+   .popbk-wrap-pop1 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
     
     .pop1 {width: 500px;height: 300px;}
+
+
+    /*-- 弹窗2 --*/
+    .popbk-wrap-pop2 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .3s linear;-o-transition: opacity .3s linear;transition: opacity .3s linear; }
+    .popbk-wrap-pop2.in { opacity: 1;}
+
+    .popbk-wrap-pop2 .popbk {position: absolute; top:0; left:50%; -webkit-transition:1s .2s; transition:1s .2s;  background:#eee; 
+    -webkit-transform: scale(1); transform: scale(1); opacity:0;
+    }
+    .popbk-wrap-pop2.in .popbk {-webkit-transform: scale(1); transform: scale(1);opacity:1;}
+    .popbk-wrap-pop2 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
+
+    .pop2 {width: 500px;height: 300px;}
+
+    /*-- 弹窗3 --*/
+    .popbk-wrap-pop3 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .15s linear;-o-transition: opacity .15s linear;transition: opacity .15s linear;}
+    .popbk-wrap-pop3.in { opacity: 1;}
+
+    .popbk-wrap-pop3 .popbk {position: absolute; top:0; left:50%; -webkit-transition:0.5s .2s; transition:0.5s .2s; background:#eee; -webkit-transform: scale(1) translate(0,30%); transform: scale(1) translate(0,30%); opacity:0;}
+    .popbk-wrap-pop3.in .popbk {-webkit-transform: scale(1) translate(0,0); transform: scale(1) translate(0,0); opacity:1;}
+
+    .popbk-wrap-pop3 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
+
+    .pop3 {width: 500px;height: 300px;}
   </style>
 </head>
 <body class="">
@@ -44,17 +69,17 @@
         <button class="btn btn-1" id="btn1">弹框1</button>
       </div>
       <div class="col-3">
-        <button class="btn btn-2">弹框2</button>
+        <button class="btn btn-2" id="btn2">弹框2</button>
       </div>
       <div class="col-3">
-        <button class="btn btn-2">弹框3</button>
+        <button class="btn btn-3" id="btn3">弹框3</button>
       </div>
     </div>
   </div>
 
 
   <div class="pop1" id="pop1" data-box="popbk" >
-    <h2>弹出1</h2>
+    <h2 class="ta-c">弹出1</h2>
   </div>
 
   <div class="pop2" id="pop2" data-box="popbk" >
@@ -68,71 +93,72 @@
 
   <script type="text/javascript">
 
-  /* ========================================================================
-   * Bootstrap: transition.js v3.2.0
-   * http://getbootstrap.com/javascript/#transitions
-   * ========================================================================
-   * Copyright 2011-2014 Twitter, Inc.
-   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-   * ======================================================================== 
-   $.support.transition && $parent.hasClass('fade') ?
-        $parent
-          .one('bsTransitionEnd', removeElement)
-          .emulateTransitionEnd(150) :
-  removeElement()   
-   */
+/* ========================================================================
+ * Bootstrap: transition.js v3.2.0
+ * http://getbootstrap.com/javascript/#transitions
+ * ========================================================================
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== 
+ $.support.transition && $parent.hasClass('fade') ?
+      $parent
+        .one('bsTransitionEnd', removeElement)
+        .emulateTransitionEnd(150) :
+removeElement()
+ 
+ */
 
-  +function ($) {
-    'use strict';
 
-    // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
-    // ============================================================
++function ($) {
+  'use strict';
 
-    function transitionEnd() {
-      var el = document.createElement('bootstrap')
+  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+  // ============================================================
 
-      var transEndEventNames = {
-        WebkitTransition : 'webkitTransitionEnd',
-        MozTransition    : 'transitionend',
-        OTransition      : 'oTransitionEnd otransitionend',
-        transition       : 'transitionend'
-      }
+  function transitionEnd() {
+    var el = document.createElement('bootstrap')
 
-      for (var name in transEndEventNames) {
-        if (el.style[name] !== undefined) {
-          return { end: transEndEventNames[name] }
-        }
-      }
-
-      return false // explicit for ie8 (  ._.)
+    var transEndEventNames = {
+      WebkitTransition : 'webkitTransitionEnd',
+      MozTransition    : 'transitionend',
+      OTransition      : 'oTransitionEnd otransitionend',
+      transition       : 'transitionend'
     }
 
-    // http://blog.alexmaccaw.com/css-transitions
-    $.fn.emulateTransitionEnd = function (duration) {
-      var called = false
-      var $el = this
-      $(this).one('bsTransitionEnd', function () { called = true })
-      var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
-      setTimeout(callback, duration)
-      return this
+    for (var name in transEndEventNames) {
+      if (el.style[name] !== undefined) {
+        return { end: transEndEventNames[name] }
+      }
     }
 
-    $(function () {
-      $.support.transition = transitionEnd()
+    return false // explicit for ie8 (  ._.)
+  }
 
-      if (!$.support.transition) return
+  // http://blog.alexmaccaw.com/css-transitions
+  $.fn.emulateTransitionEnd = function (duration) {
+    var called = false
+    var $el = this
+    $(this).one('bsTransitionEnd', function () { called = true })
+    var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
+    setTimeout(callback, duration)
+    return this
+  }
 
-      $.event.special.bsTransitionEnd = {
-        bindType: $.support.transition.end,
-        delegateType: $.support.transition.end,
-        handle: function (e) {
-          if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
-        }
+  $(function () {
+    $.support.transition = transitionEnd()
+
+    if (!$.support.transition) return
+
+    $.event.special.bsTransitionEnd = {
+      bindType: $.support.transition.end,
+      delegateType: $.support.transition.end,
+      handle: function (e) {
+        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
       }
-    })
+    }
+  })
 
-  }(jQuery);
-
+}(jQuery);
 
     /** 
     * extend 弹出框
@@ -238,13 +264,12 @@
         if ($this.length) {
           $this.parents(".popbk-wrap").show();
           $this.parents(".popbk-wrap")[0].offsetWidth;
-          setTimeout(
-            function(){
-              $this.parents(".popbk-wrap").addClass("in");
-              $('body').css('overflow','hidden');          
-            }, 300)
-    
-    
+   
+          
+          $this.parents(".popbk-wrap").addClass("in");
+
+
+          $('body').css('overflow','hidden');        
         }
       }
     
@@ -252,14 +277,19 @@
         $('body').css('overflow','auto');
         var $this = this.el;
         var $parent = $this.parents(".popbk-wrap");
+        
         if ($.support.transition && $parent.hasClass('fade')) {
-          $parent.removeClass("in");
-          $parent.one('bsTransitionEnd', function  () {
+          $parent
+          .removeClass("in")
+          .one('bsTransitionEnd', function  () {
               $parent.hide();
-            }).emulateTransitionEnd(150);
+            })
+          .emulateTransitionEnd(150)
         }else {
           $parent.hide();
         }
+
+        
         $this.trigger('callbackClose');
         $('body').css('overflow','auto');
       }
@@ -278,9 +308,8 @@
           else if (option) data.setState(option)
         })
       }
-      $(document).on('ready.popbk poprb', function  () {
+      $(document).on('ready.popbk', function  () {
         var $this = $(dataString);
-        
         if ($this.data('ck.pokbk') == undefined) {
           Plugin.call($this,'build');
         }
@@ -291,7 +320,7 @@
         
         if ($this.data('ck.pokbk') == undefined) {
           Plugin.call($this,'build');
-        }    
+        }
       }
     
     })(jQuery);
@@ -301,6 +330,17 @@
       $('#btn1').on('click',function  () {
         $("#pop1").data('ck.pokbk').open();
       })
+
+      //弹窗2
+      $('#btn2').on('click',function  () {
+        $("#pop2").data('ck.pokbk').open();
+      })
+
+      //弹窗3
+      $('#btn3').on('click',function  () {
+        $("#pop3").data('ck.pokbk').open();
+      })
+
     })
   </script>
 
