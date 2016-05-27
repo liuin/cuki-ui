@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>    
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="../../dist/css/cuki-ui.css" />
+  <script type="text/javascript" src="../../dist/js/jquery.js"></script>
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!--[if IE]>
+    <script type="text/javascript">
+       var console = { log: function() {} };
+    </script>
+  <![endif]-->
+
+  <title>website name</title>
+
+  <script type="text/javascript">
+    +(function($) {
+      var formSting = '[data-form="select"]';
+      var Select = function  (number) {
+        this.id = number;
+      }
+    
+      Select.prototype.build = function  (el) {
+        var $this = $(el);
+        $this.css("opacity","0");
+        $this.wrap("<span class='selectstyle'></span>");
+        var gettxt = '<span class="val textb" >'+ $this.find("option:eq(0)").html()+'<i class="none"></i></span>';
+        gettxt = $(gettxt);       
+        gettxt.insertBefore($this);
+        $this.parents(".selectstyle").addClass("select-"+ this.id);
+        $this.on("change.resize",function  () {      
+          var vl = $(this).find("option:selected").html();
+          $(this).prev('.val').html(vl);
+          $(this).parents(".selectstyle").find('.val').html(vl);
+    
+          var ind = $(this).find("option:selected").index();
+    
+          if (ind == 0) {
+            $(this).parents(".selectstyle").find('.val').addClass('firstval');
+          }else{
+            $(this).parents(".selectstyle").find('.val').removeClass('firstval');        
+          }
+    
+        })
+        $this.trigger('change.resize');
+      }
+    
+      function Plugin(option) {
+        return this.each(function (n) {
+          var $this   = $(this)
+          var number = $this.attr('id') || n 
+          var data    = $this.data('ck.select')
+          var options = typeof option == 'object' && option
+          if (!data) $this.data('ck.select', (data = new Select(number)))
+          if (option == 'build') data.build($(this))
+          else if (option) data.setState(option)
+        })
+      }
+    
+      Select.init = function  () {
+        var $this = $(formSting);
+        Plugin.call($this,'build');
+      }
+      
+      $(document).ready(function() {
+        var $this = $(formSting);
+        Plugin.call($this,'build');
+      })
+    
+      $.fn.formSelect = function  (options) {
+        var $this = $(this);
+        Plugin.call($this,'build');
+      }
+    
+    
+    })(jQuery)
+
+
+    /** 
+    * extend 表单控件自定义
+    * @author cuki13  
+    
+    */
+    +(function() {
+      var formSting = '[data-form="select1"]';
+      var Select = function  (number) {
+        this.id = number;
+      }
+    
+      Select.prototype.build = function  (el) {
+        var $this = $(el);
+        $this.hide();
+        $this.wrap("<div class='form-el form-select-ui'></div>");
+        var gettxt = '<div class="val textb" ><span class="val-ins">'+ $this.find("option:selected").html()+'</span><i class="none"></i></div>';
+        gettxt = $(gettxt);
+        gettxt.insertBefore($this);
+        gettxt.on('click',function  (e) {
+          $('ul.option').hide();
+          $(this).next().show();
+          e.stopPropagation();
+        })
+    
+         //高度固定
+         function getoffset (obj) {
+          if (obj.find('li.active').length < 0) {
+            return false;
+          }
+          var objh = obj.height();
+          var toth = obj.find('li').length*obj.find('li').height();
+          var activeh = obj.find('li.active').prevAll().length * obj.find('li').height();
+          obj.scrollTop(activeh - objh/2);
+        }
+    
+        var option = $('<ul class="option none"></ul>');
+
+        var optionItemGround = '';
+        $this.find('option').each(function () {
+          if ($(this).html() == $this.find("option:selected").html()) {
+            optionItemGround += '<li class="active">'+ $(this).html() +'</li>';
+          }else {
+             optionItemGround += '<li>'+ $(this).html() +'</li>';
+          }     
+        })
+    
+        option.append(optionItemGround).width($this.outerWidth());
+        
+    
+        option.on('click','li',function  () {
+          var ind = $(this).index();
+          $(this).addClass('active').siblings().removeClass('active');
+          $this.find('option').eq(ind).prop('selected','selected');
+          $this.prev().prev('.val').find('.val-ins').html($(this).html());
+          $this.trigger('changeVal');
+          $this.trigger('change');
+            // wk
+        })
+    
+        option.insertBefore($this);
+    
+        $this.parents(".form-select-ui").addClass("select-"+ this.id).width($this.outerWidth());
+        $(window).resize(function  () {
+          $this.parents(".form-select-ui").width($this.outerWidth());
+          option.width($this.outerWidth());
+    
+        })
+    
+    
+        $this.on("change.resize",function  () {
+          var $parents = $this.parents('.form-select-ui');
+          var vl = $(this).find("option:selected").html();
+          $parents.find('.val-ins').html(vl);     
+          option.find('li').each(function () {
+              if ($(this).html() == vl) {
+                $(this).addClass('active').siblings().removeClass('active');
+              }
+          })
+        })
+    
+        $this.on('rbluid',function  () {
+        
+          var optionItemGround = '';
+          $this.find('option').each(function () {
+            if ($(this).html() == $this.find("option:selected").html()) {
+              optionItemGround += '<li class="active">'+ $(this).html() +'</li>';
+            }else {
+               optionItemGround += '<li>'+ $(this).html() +'</li>';
+            }     
+          })
+          option.empty().append(optionItemGround).width($this.outerWidth());
+          $this.trigger('change');
+        })
+    
+        $this.trigger('change.resize');
+      }
+    
+      function Plugin(option) {
+        return this.each(function (n) {
+          var $this   = $(this)
+          var number = $this.attr('id') || n 
+          var data    = $this.data('ck.select')
+          var options = typeof option == 'object' && option
+          if (!data) $this.data('ck.select', (data = new Select(number)))
+          if (option == 'build') data.build($(this))
+          else if (option) data.setState(option)
+        })
+      }
+    
+      Select.init = function  () {
+        var $this = $(formSting);
+        Plugin.call($this,'build');
+      }
+      
+      $(document).ready(function() {
+        var $this = $(formSting);
+        Plugin.call($this,'build');
+      })
+    
+      $(document).on('click',function  () {
+        $('.form-select-ui .option').hide();
+      })
+    
+      $.fn.formSelect = function  (options) {
+        var $this = $(this);
+        Plugin.call($this,'build');
+      }
+    
+    })()
+
+  </script>
+
+  <style type="text/css">
+    /*-- selectct --*/
+    .selectstyle {position:relative; border:1px solid #ccc; height:30px;display:inline-block;line-height:30px; width:150px; overflow:hidden;cursor:pointer;}
+    .selectstyle select {position:absolute;left:0; top:0px;  margin:0; padding:0; width:100%; height:30px; }
+    .selectstyle .val {display: block;padding-left: 5px;color: #333;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;padding-right: 30px;}
+
+    .selectbk {padding-top: 10px; }
+
+
+    /*-- form-select-ui --*/
+    select.select1 {width: 150px;}
+    .form-select-ui {border: 1px solid #ccc; width: 150px; cursor:pointer; height: 30px;}
+    .form-select-ui .option {padding:0; margin: 0; list-style-type:none; position:absolute;}
+    .form-select-ui .option li {line-height: 30px; padding-left: 10px;padding-right: 10px; background:#000;color: #fff;}
+    .form-select-ui .option li:hover {background:#333;}
+
+    .form-select-ui .val {line-height: 30px; padding-left: 10px;  }
+  </style>
+
+</head>
+<body class="yh">
+  <noscript>
+    <strong>你的浏览器似乎禁用了 JavaScript。</strong><br />您必须在浏览器中启用JavaScript才能使用本网站的功能。
+  </noscript>
+  <div class="container">
+    <div class="row">
+      <h2>表单下拉样式</h2>
+      <div class="selectbk col-4">
+        <select data-form="select">
+          <option>下拉文字1</option>
+          <option>下拉文字2</option>
+        </select>
+      </div>
+      <div class="selectbk col-4">
+        <select class="select1" data-form="select1">
+          <option>下拉文字1</option>
+          <option>下拉文字2</option>
+        </select>
+      </div>
+    </div>  
+  </div>
+
+</body>
+</html>
