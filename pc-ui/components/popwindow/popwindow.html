@@ -26,13 +26,11 @@
     .popbk-wrap-pop1 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .3s linear;-o-transition: opacity .3s linear;transition: opacity .3s linear;    }
     .popbk-wrap-pop1.in { opacity: 1; }
 
-    .popbk-wrap-pop1 .popbk {position: absolute; top:0; left:50%; -webkit-transition:0.5s .3s; transition:0.5s .3s;  -webkit-transform: scale(0); transform: scale(0); background:#eee;}
-
-
-   .popbk-wrap-pop1.in .popbk {-webkit-transform: scale(1); transform: scale(1);}
+    .popbk-wrap-pop1 .popbk {position: absolute; top:0; left:50%;   -webkit-transform: scale(0); transform: scale(0); background:#eee; opacity:0;-webkit-transition:0.5s; transition:0.5s;}
+    .popbk-wrap-pop1 .popbk.in {-webkit-transform: scale(1); transform: scale(1); opacity:1;-webkit-transition:0.5s .3s; transition:0.5s .3s;}
 
    .popbk-wrap-pop1 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
-    
+   
     .pop1 {width: 500px;height: 300px;}
 
 
@@ -40,10 +38,9 @@
     .popbk-wrap-pop2 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .3s linear;-o-transition: opacity .3s linear;transition: opacity .3s linear; }
     .popbk-wrap-pop2.in { opacity: 1;}
 
-    .popbk-wrap-pop2 .popbk {position: absolute; top:0; left:50%; -webkit-transition:1s .2s; transition:1s .2s;  background:#eee; 
-    -webkit-transform: scale(1); transform: scale(1); opacity:0;
-    }
-    .popbk-wrap-pop2.in .popbk {-webkit-transform: scale(1); transform: scale(1);opacity:1;}
+    .popbk-wrap-pop2 .popbk {position: absolute; top:0; left:50%; -webkit-transition:1s; transition:1s; background:#eee; -webkit-transform: scale(1); transform: scale(1); opacity:0;}
+    .popbk-wrap-pop2 .popbk.in {-webkit-transform: scale(1); transform: scale(1);opacity:1;-webkit-transition:1s .2s; transition:1s .2s;}
+
     .popbk-wrap-pop2 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
 
     .pop2 {width: 500px;height: 300px;}
@@ -52,8 +49,8 @@
     .popbk-wrap-pop3 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .15s linear;-o-transition: opacity .15s linear;transition: opacity .15s linear;}
     .popbk-wrap-pop3.in { opacity: 1;}
 
-    .popbk-wrap-pop3 .popbk {position: absolute; top:0; left:50%; -webkit-transition:0.5s .2s; transition:0.5s .2s; background:#eee; -webkit-transform: scale(1) translate(0,30%); transform: scale(1) translate(0,30%); opacity:0;}
-    .popbk-wrap-pop3.in .popbk {-webkit-transform: scale(1) translate(0,0); transform: scale(1) translate(0,0); opacity:1;}
+    .popbk-wrap-pop3 .popbk {position: absolute; top:0; left:50%; -webkit-transition:0.5s; transition:0.5s; background:#eee; -webkit-transform: scale(1) translate(0,30%); transform: scale(1) translate(0,30%); opacity:0;}
+    .popbk-wrap-pop3 .popbk.in {-webkit-transform: scale(1) translate(0,0); transform: scale(1) translate(0,0); opacity:1; -webkit-transition:0.5s .2s; transition:0.5s .2s;}
 
     .popbk-wrap-pop3 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
 
@@ -185,6 +182,7 @@ removeElement()
       var Popbk = function  (el, number ,options) {
         this.el = $(el)
         this.id = number
+        this.state = 'null'
         this.options = $.extend({}, this.defualts, options); 
       }
       
@@ -261,8 +259,14 @@ removeElement()
         }
     
       Popbk.prototype.open = function  () {
-        this.close;
         var $this = this.el;
+
+        if ($this.state == 'in') {
+          return;
+        }
+
+        $this.state = 'in';
+       
         if ($this.length) {
           $this.parents(".popbk-wrap").show();
           $this.parents(".popbk-wrap")[0].offsetWidth;
@@ -271,29 +275,58 @@ removeElement()
           $this.parents(".popbk-wrap").addClass("in");
 
 
+
+          if ($.support.transition) {
+            $this.parents(".popbk").addClass("in")
+            .one('bsTransitionEnd',function  () {
+              $this.state = 'null';
+            })
+          }else {
+            $this.parents(".popbk").addClass("in");
+            $this.state = 'null';
+          }          
+
           $('body').css('overflow','hidden');        
         }
       }
     
       Popbk.prototype.close = function  () {
-        $('body').css('overflow','auto');
+       
         var $this = this.el;
-        var $parent = $this.parents(".popbk-wrap");
+
+
+        if ($this.state == 'in') {
+          return;
+        }
+
+        $this.state = 'in';
+
+        var $parent = $this.parents(".popbk");
         
-        if ($.support.transition && $parent.hasClass('fade')) {
+        if ($.support.transition && $parent.hasClass('in')) {
           $parent
           .removeClass("in")
-          .one('bsTransitionEnd', function  () {
-              $parent.hide();
-            })
-          .emulateTransitionEnd(150)
+          .one('bsTransitionEnd', function  () {              
+              $this.parents(".popbk-wrap").removeClass('in');
+              
+            }).emulateTransitionEnd(300);  
+
+          $this.parents(".popbk-wrap").one('bsTransitionEnd',function  () {            
+            $this.state = 'null';
+            $(this).hide();
+            $('body').css('overflow','auto');            
+          })
+          .emulateTransitionEnd(800);  
+
         }else {
-          $parent.hide();
+          $this.parents(".popbk-wrap").hide();
+          $('body').css('overflow','auto');
+          $this.state = 'null';
         }
 
         
         $this.trigger('callbackClose');
-        $('body').css('overflow','auto');
+        
       }
     
       function Plugin(option) {
