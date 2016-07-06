@@ -21,7 +21,9 @@
   <title>website name</title>
 
   <style type="text/css">
-    
+    body { height: 1500px;}
+
+
     /*-- 弹窗1 --*/
     .popbk-wrap-pop1 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .3s linear;-o-transition: opacity .3s linear;transition: opacity .3s linear;    }
     .popbk-wrap-pop1.in { opacity: 1; }
@@ -55,6 +57,21 @@
     .popbk-wrap-pop3 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
 
     .pop3 {width: 500px;height: 300px;}
+
+    .btn-4 {border-radius:0; background:green; color: #fff; width: 150px; height: 150px;}
+
+    /*-- 弹窗4 --*/
+    .popbk-wrap-pop4 {position: fixed; top: 0; left: 0; bottom: 0; right: 0; overflow: auto; z-index:100; background:rgba(0, 0, 0, 0.5);opacity: 0;-webkit-transition: opacity .15s linear;-o-transition: opacity .15s linear;transition: opacity .15s linear;}
+    .popbk-wrap-pop4.in { opacity: 1;}
+
+    .popbk-wrap-pop4 .popbk {position: absolute; top:0; left:50%; background:#eee;overflow:hidden; -webkit-transition:.4s; transition:.4s;}
+    .popbk-wrap-pop4 .popbk.in {background:#eee; }
+
+    .popbk-wrap-pop4 .popbk .close {position:absolute;right:0;top:0; width: 30px;height: 30px;background:#000; cursor:pointer; text-align:center;color: #fff; line-height:30px;}
+
+    .pop4 {width: 500px; height: 300px; }
+    .pop4 .inner.close { left: 1000px;top: 193px;width: 150px;height: 150px;}
+
   </style>
 </head>
 <body class="">
@@ -73,6 +90,10 @@
       <div class="col-3">
         <button class="btn btn-3" id="btn3">弹框3</button>
       </div>
+
+      <div class="col-3">
+        <button class="btn btn-4" id="btn4">弹框4</button>
+      </div>
     </div>
   </div>
 
@@ -87,6 +108,10 @@
 
   <div class="pop3" id="pop3" data-box="popbk" >
     <h2>弹出2</h2>
+  </div>
+
+  <div class="pop4" id="pop4" data-box="popbk" data-type="#btn4">
+      <h2>弹出4</h2>
   </div>
 
 
@@ -266,15 +291,52 @@ removeElement()
         }
 
         $this.state = 'in';
-       
+
+
+        if ($this.data('type')) {     //如果是用type的话
+          var inzoomobj = $($this.data('type'));
+          var styletype1 = {
+            width:inzoomobj.outerWidth(),
+            height:inzoomobj.outerHeight(),
+            top:inzoomobj.offset().top - $(window).scrollTop(),
+            left:inzoomobj.offset().left - $(window).scrollLeft(),
+            'margin-left':0,
+            'margin-top':0,
+            'opacity':0
+          }
+
+          $this.parent().css(styletype1);
+          $this.parents(".popbk-wrap").show();
+          $this.parents(".popbk-wrap")[0].offsetWidth;                      
+          $this.parents(".popbk-wrap").addClass("in");
+
+          var styletype2 = {
+            width:$this.width(),
+            height:$this.height(),
+            top: ($this.height() > $(window).height())? '0px' : ($(window).height() - $this.height())/2,
+            left:($(window).width() - $this.width())/2,
+            'opacity':1
+          }          
+          $this.parent().css(styletype2);
+
+          if ($.support.transition) {
+            $this.parents(".popbk").one('bsTransitionEnd',function  () {
+              $this.state = 'null';
+            })
+          }else {
+            $this.state = 'null';
+          }
+          $('body').css('overflow','hidden');    
+          
+          return
+        }
+
+
         if ($this.length) {
           $this.parents(".popbk-wrap").show();
           $this.parents(".popbk-wrap")[0].offsetWidth;
-   
-          
+             
           $this.parents(".popbk-wrap").addClass("in");
-
-
 
           if ($.support.transition) {
             $this.parents(".popbk").addClass("in")
@@ -300,6 +362,38 @@ removeElement()
         }
 
         $this.state = 'in';
+
+        if ($this.data('type')) {     //如果是用type的话
+          var inzoomobj = $($this.data('type'));
+          var styletypeOut = {
+            width:inzoomobj.outerWidth(),
+            height:inzoomobj.outerHeight(),
+            top:inzoomobj.offset().top - $(window).scrollTop(),
+            left:inzoomobj.offset().left - $(window).scrollLeft(),
+            'margin-left':0,
+            'margin-top':0,
+            'opacity':0
+          }
+
+          $this.parent().css(styletypeOut);
+
+          if ($.support.transition) {
+            $this.parents(".popbk").one('bsTransitionEnd',function  () {
+              
+              $this.parents(".popbk-wrap").removeClass('in').hide();
+              $this.state = 'null';
+            })
+          }else {
+            $this.parents(".popbk-wrap").removeClass('in').hide();
+            $this.state = 'null';
+          }
+          $('body').css('overflow','auto');
+          
+          return
+        }
+
+
+
 
         var $parent = $this.parents(".popbk");
         
@@ -374,6 +468,11 @@ removeElement()
       //弹窗3
       $('#btn3').on('click',function  () {
         $("#pop3").data('ck.pokbk').open();
+      })
+
+      //弹窗4
+      $('#btn4').on('click',function  () {
+        $("#pop4").data('ck.pokbk').open();
       })
 
     })
